@@ -6,14 +6,10 @@
 
 - [Aperçu](#aperçu)
 - [Installation](#installation)
-- [Configuration](#configuration)
-- [Utilisation](#utilisation)
-- [Contributions](#contributions)
-- [Licence](#licence)
 
 ## Aperçu
 
-![Capture d'écran][(https://youtu.be/2tVvL82Wcto)]
+![Appercu][(https://youtu.be/2tVvL82Wcto)]
 
 **Ox Location** est un script qui offre les fonctionnalités suivantes :
 
@@ -24,8 +20,6 @@
 
 ## Installation
 
-1. Assurez-vous d'avoir un serveur FiveM en cours d'exécution.
-2. Clonez ce référentiel dans le dossier `resources` de votre serveur FiveM.
+1. 'ensure' le script dans 'serveur.cfg' ou 'ressource.cfg'
 
-   ```shell
-   git clone https://github.com/votre-utilisateur/nom-du-projet.git
+
