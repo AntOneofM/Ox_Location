@@ -13,9 +13,9 @@
 
 ## Aperçu
 
-![Capture d'écran](screenshot.png)
+![Capture d'écran][(https://youtu.be/2tVvL82Wcto)]
 
-**Ox Locationt** est un script qui offre les fonctionnalités suivantes :
+**Ox Location** est un script qui offre les fonctionnalités suivantes :
 
 - Location de véhicules en jeu.
 - Paiement de la caution lors de la location.
