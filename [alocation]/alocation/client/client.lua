@@ -99,7 +99,7 @@ AddEventHandler('zejay:MotoLocation', function()
     lib.showContext('MotoLocation')
 end)
 
-options = {} 
+options = {}
 
 if Config.Veh.Car and #Config.Veh.Car > 0 then
   for k, v in pairs(Config.Veh.Car) do
@@ -107,21 +107,23 @@ if Config.Veh.Car and #Config.Veh.Car > 0 then
       title = v.label,
       icon = 'fa-solid fa-car',
       image = v.img,
+      description = '$' .. v.price, -- Ajoutez le prix comme description
     }
 
-  if not playerHasRentedVehicle then
-    option.event = 'aLocation:CheckLiquide'
-    option.onSelect = function()
-      selectedVehicle = v
-      price = v.price + Config.Caution
-      veh = v.veh 
-      label = v.label 
+    if not playerHasRentedVehicle then
+      option.event = 'aLocation:CheckLiquide'
+      option.onSelect = function()
+        selectedVehicle = v
+        price = v.price + Config.Caution
+        veh = v.veh
+        label = v.label
+      end
+    else
+      option.disabled = true
+      option.description = 'Vous avez déjà loué un véhicule.'
     end
-  else
-    option.disabled = true
-    option.description = 'Vous avez déjà loué un véhicule.'
-  end
-    table.insert(options, option) 
+
+    table.insert(options, option)
   end
 end
 
@@ -142,6 +144,7 @@ if Config.Veh.Bike and #Config.Veh.Bike > 0 then
       title = v.label,
       icon = 'fa-solid fa-bicycle',
       image = v.img,
+      description = '$' .. v.price, -- Ajoutez le prix comme description
     }
 
     if not playerHasRentedVehicle then
