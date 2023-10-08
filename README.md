@@ -1,6 +1,6 @@
-# Nom du Projet
+# Ox Location
 
-**Nom du Projet** est un script pour [FiveM](https://fivem.net/) qui permet aux joueurs de louer des véhicules en jeu et de les retourner.
+**Ox Locationt** est un script pour [FiveM] qui permet aux joueurs de louer des véhicules en jeu et de les retourner.
 
 ## Table des Matières
 
@@ -15,7 +15,7 @@
 
 ![Capture d'écran](screenshot.png)
 
-**Nom du Projet** est un script qui offre les fonctionnalités suivantes :
+**Ox Locationt** est un script qui offre les fonctionnalités suivantes :
 
 - Location de véhicules en jeu.
 - Paiement de la caution lors de la location.
