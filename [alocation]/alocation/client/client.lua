@@ -1,5 +1,3 @@
-ESX = exports["es_extended"]:getSharedObject()
-
 
 local selectedVehicle = nil
 
@@ -99,7 +97,7 @@ AddEventHandler('zejay:MotoLocation', function()
     lib.showContext('MotoLocation')
 end)
 
-options = {}
+options = {} 
 
 if Config.Veh.Car and #Config.Veh.Car > 0 then
   for k, v in pairs(Config.Veh.Car) do
@@ -110,20 +108,32 @@ if Config.Veh.Car and #Config.Veh.Car > 0 then
       description = '$' .. v.price, -- Ajoutez le prix comme description
     }
 
-    if not playerHasRentedVehicle then
-      option.event = 'aLocation:CheckLiquide'
-      option.onSelect = function()
-        selectedVehicle = v
-        price = v.price + Config.Caution
-        veh = v.veh
+  if not playerHasRentedVehicle then
+    option.onSelect = function()
+      selectedVehicle = v
+      local totalPrice = v.price + Config.Caution
+      local hasItem = exports.ox_inventory:Search('count', 'money') 
+      if hasItem >= totalPrice then 
+        veh = v.veh 
         label = v.label
+        TriggerServerEvent('aLocation:CheckLiquide', totalPrice)
+        SpawnVehicule(veh, label)
+        ComptLocation = true
+        playerHasRentedVehicle = true
+        selectedVehicle = nil
+      else
+        lib.notify({
+            title = 'Location',
+            description = 'Vous n\'avez pas assez d\'argent',
+            type = 'error'
+        })
       end
-    else
-      option.disabled = true
-      option.description = 'Vous avez déjà loué un véhicule.'
     end
-
-    table.insert(options, option)
+  else
+    option.disabled = true
+    option.description = 'Vous avez déjà loué un véhicule.'
+  end
+    table.insert(options, option) 
   end
 end
 
@@ -151,11 +161,24 @@ if Config.Veh.Bike and #Config.Veh.Bike > 0 then
       
       option.onSelect = function()
         selectedVehicle = v
-        price = v.price + Config.Caution
-        veh = v.veh 
-        label = v.label 
+        local totalPrice = v.price + Config.Caution
+        local hasItem = exports.ox_inventory:Search('count', 'money') 
+        if hasItem >= totalPrice then 
+          veh = v.veh 
+          label = v.label 
+          TriggerServerEvent('aLocation:CheckLiquide', totalPrice)
+          SpawnVehicule(veh, label)
+          ComptLocation = true
+          playerHasRentedVehicle = true
+          selectedVehicle = nil
+        else
+          lib.notify({
+            title = 'Location',
+            description = 'Vous n\'avez pas assez d\'argent',
+            type = 'error'
+          })
+        end
       end
-      option.event = 'aLocation:CheckLiquide'
     else
       option.disabled = true
       option.description = 'Vous avez déjà loué un véhicule.'
@@ -179,83 +202,6 @@ lib.registerContext({
 
 
 
-
-
-
-RegisterNetEvent('aLocation:CheckLiquide')
-AddEventHandler('aLocation:CheckLiquide', function()
-  if not playerHasRentedVehicle then
-    -- Vérifiez d'abord si le joueur a déjà loué un véhicule.
-    ESX.TriggerServerCallback('aLocation:CheckLiquide', function(HasEnoughLiquide)
-      if HasEnoughLiquide then 
-        SpawnVehicule(selectedVehicle.veh, selectedVehicle.label)
-        ComptLocation = true
-        playerHasRentedVehicle = true
-        selectedVehicle = nil
-      else
-        lib.notify({
-          title = "Vous n'avez pas assez d'argent en liquide !",
-          position = 'center',
-          style = {
-            backgroundColor = '#141517',
-            color = '#C1C2C5',
-            ['.description'] = {
-              color = '#909296'
-            }
-          },
-          icon = 'ban',
-          iconColor = '#C53030'
-        })
-      end
-    end, price) -- 'price' est le montant total à payer
-  else
-    -- Le joueur a déjà une location en cours, affichez un message d'erreur.
-    lib.notify({
-      title = 'Vous avez déjà loué un véhicule.',
-      position = 'center',
-      style = {
-        backgroundColor = '#141517',
-        color = '#C1C2C5',
-        ['.description'] = {
-          color = '#909296'
-        }
-      },
-      icon = 'ban',
-      iconColor = '#C53030'
-    })
-  end
-end)
-
--- ...
-
--- Gestionnaire d'événement 'aLocation:CheckBank' mis à jour
-RegisterNetEvent('aLocation:CheckBank', function()
-  if selectedVehicle then
-    local HasEnoughBank = true  -- Vous devrez ajouter votre propre logique pour vérifier l'argent en banque ici
-    if HasEnoughBank then
-      SpawnVehicule()
-      ComptLocation = true
-      playerHasRentedVehicle = true
-    else
-      lib.notify({
-        title = "Vous n'avez pas assez d'argent en banque !",
-        position = 'center',
-        style = {
-          backgroundColor = '#141517',
-          color = '#C1C2C5',
-          ['.description'] = {
-            color = '#909296'
-          }
-        },
-        icon = 'ban',
-        iconColor = '#C53030'
-      })
-      return
-    end
-  else
-    -- Gérez le cas où selectedVehicle est nil
-  end
-end)
 
 
 

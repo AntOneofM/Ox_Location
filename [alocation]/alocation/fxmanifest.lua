@@ -1,6 +1,6 @@
 fx_version 'adamant'
 game 'gta5'
-description 'Tuto de zp Trade & Dev'
+description 'AntOne of M'
 
 fx_version 'cerulean'
 
@@ -10,11 +10,11 @@ lua54 'yes'
 
 
 shared_scripts {
-    '@ox_lib/init.lua'
+    '@ox_lib/init.lua',
+    '@es_extended/imports.lua'
 }
 
 client_scripts {
-    '@es_extended/locale.lua',
     'config/*.lua',
     'client/*.lua'
     
